@@ -1,0 +1,101 @@
+<!-- 重点参数：iconStyle -->
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <!-- 原始地址：//webapi.amap.com/ui/1.0/ui/overlay/SimpleMarker/examples/custom-icon.html -->
+    <base href="//webapi.amap.com/ui/1.0/ui/overlay/SimpleMarker/examples/" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>自定义图标</title>
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+        }
+
+        #myIcon {
+            background: orange;
+            width: 20px;
+            height: 60px;
+            border-radius: 10px;
+        }
+        .chaxun-box{
+            width: 200px;
+            height: 200px;
+            position: fixed;
+            z-index: 888;
+            top: 0;
+            right: 0;
+            left: 0;
+            margin: auto;
+            cursor:pointer;
+        }
+        .box-anniu{
+            width: 50px;
+            height: 50px;
+            background: #4178ff;
+            line-height: 50px;
+            margin: 0 auto;
+            margin-top: 30px;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+<div id="container"></div>
+<div style="display:none">
+    <div id="myIcon"></div>
+</div>
+<div class="chaxun-box">
+    经度：<input type="text" id="lng"><br>
+    纬度：<input type="text" id="lat">
+    <div class="box-anniu">查询</div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript" src='//webapi.amap.com/maps?v=1.3&key=3c4eb4c9708bcba169f5dabb0fadb61d'></script>
+<!-- UI组件库 1.0 -->
+<script src="//webapi.amap.com/ui/1.0/main.js"></script>
+<script type="text/javascript">
+    //创建地图
+    var map = new AMap.Map('container', {
+        zoom: 4
+    });
+    var jishu=0
+$(".box-anniu").on("click",function () {
+    jishu++
+    var lng=$("#lng").val()
+    var lat=$("#lat").val()
+    dingwei(lng,lat,jishu)
+    map.setZoomAndCenter(15, [lng,lat]);
+})
+
+    function dingwei(lng, lat,jishu) {
+
+        AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
+            new SimpleMarker({
+                iconLabel: jishu,
+                //自定义图标地址
+                iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+                //设置基点偏移
+                offset: new AMap.Pixel(-19, -60),
+                map: map,
+                showPositionPoint: true,
+                position: [lng, lat],
+                zIndex: 15
+            });
+        });
+
+    }
+
+
+
+</script>
+</body>
+
+</html>
